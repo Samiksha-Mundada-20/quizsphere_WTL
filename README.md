@@ -60,12 +60,33 @@ npm run dev
 ```
 Open **http://localhost:5173**
 
+## Host the front end on GitHub Pages
+
+The `main` branch deploys the React front end to GitHub Pages through the
+workflow in `.github/workflows/deploy-pages.yml`. In repository **Settings >
+Pages**, set the build and deployment source to **GitHub Actions**. After the
+workflow succeeds, the site is available at:
+
+https://samiksha-mundada-20.github.io/quizsphere_WTL/
+
+GitHub Pages hosts static files only; it cannot run the Express API or MySQL.
+The published front end shows an API configuration message until you deploy the
+back end and database separately. Then add a repository Actions variable named
+`VITE_API_URL` with the API base URL ending in `/api`, and configure the back
+end's `CLIENT_URL` to the Pages URL. Use deployment-specific database
+credentials and a unique random `JWT_SECRET` of at least 32 characters; do not
+use the demo administrator account on a publicly reachable back end.
+
 ## Login details
 
 | Role    | Email                  | Password |
 |---------|------------------------|----------|
 | Admin   | admin@quizsphere.com   | admin123 |
 | Student | click "Sign Up" and create one | - |
+
+The demo administrator account is for local demonstration only. Anyone who can
+reach a back end initialized from the included demo database can sign in with
+these public demo credentials.
 
 Admins can assign comma-separated subject tags and a passing score when creating a quiz. Students can filter quizzes by tag, flag questions while taking a quiz, and print or save a completion certificate after passing.
 

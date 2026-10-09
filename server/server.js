@@ -5,8 +5,10 @@ const cors = require('cors');
 const pool = require('./db');
 const { errorHandler } = require('./middleware/errors');
 
-if (!process.env.JWT_SECRET) {
-  console.error('JWT_SECRET is missing. Copy server/.env.example to server/.env first.');
+if (!process.env.JWT_SECRET ||
+    process.env.JWT_SECRET.length < 32 ||
+    process.env.JWT_SECRET === 'change_this_to_a_long_random_text') {
+  console.error('JWT_SECRET must be a unique random value of at least 32 characters. See server/.env.example.');
   process.exit(1);
 }
 
