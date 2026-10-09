@@ -77,6 +77,37 @@ end's `CLIENT_URL` to the Pages URL. Use deployment-specific database
 credentials and a unique random `JWT_SECRET` of at least 32 characters; do not
 use the demo administrator account on a publicly reachable back end.
 
+### Deploy the back end and MySQL on Railway
+
+1. Create a Railway project from this GitHub repository and add a **MySQL**
+   service.
+2. Add a service from the same repository for the API. In its settings, set
+   **Root Directory** to `/server`; Railway uses `server/railway.json` to build,
+   start, and health-check the API.
+3. In the API service's variables, add `DB_HOST`, `DB_PORT`, `DB_USER`, and
+   `DB_PASSWORD` as references to the MySQL service's `MYSQLHOST`, `MYSQLPORT`,
+   `MYSQLUSER`, and `MYSQLPASSWORD` variables. Set `DB_NAME` to
+   `quiz_system`. Set `JWT_SECRET` to a unique random value of at least 32
+   characters and `CLIENT_URL` to
+   `https://samiksha-mundada-20.github.io/quizsphere_WTL`.
+   Generate a secret locally with
+   `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`.
+   Enter secrets only in Railway's private Variables UI; never commit or send
+   them in chat.
+4. In Railway's MySQL service, enable its TCP Proxy. Use its private connection
+   details only from within Railway, or its proxy connection details from your
+   own computer, to run `server/database.sql` once using a MySQL client. That
+   script creates the `quiz_system` database and demo accounts. Do not put the
+   MySQL credentials in this repository.
+5. Generate a public domain for the API service. In GitHub, open **Settings >
+   Secrets and variables > Actions > Variables**, add `VITE_API_URL` with the
+   API's public URL followed by `/api`, and rerun the Pages workflow (or push a
+   new commit). The API domain must allow requests from the Pages URL above.
+
+The public demo administrator credentials are intentional but unsafe for any
+real or sensitive data. Anyone who knows them can use the deployed admin
+features; change the seed account's password before using the hosted service.
+
 ## Login details
 
 | Role    | Email                  | Password |
