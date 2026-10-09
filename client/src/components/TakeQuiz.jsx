@@ -80,6 +80,18 @@ export default function TakeQuiz({ quizId, go }) {
     });
   }
 
+  const confirmationDialog = confirmation && (
+    <ConfirmDialog
+      {...confirmation}
+      onConfirm={() => {
+        const action = confirmation.onConfirm;
+        setConfirmation(null);
+        action();
+      }}
+      onCancel={() => setConfirmation(null)}
+    />
+  );
+
   function toggleFlag() {
     setFlagged((current) => ({ ...current, [q.question_id]: !current[q.question_id] }));
   }
@@ -88,17 +100,7 @@ export default function TakeQuiz({ quizId, go }) {
   if (!quiz) {
     return (
       <div className="take">
-        {confirmation && (
-          <ConfirmDialog
-            {...confirmation}
-            onConfirm={() => {
-              const action = confirmation.onConfirm;
-              setConfirmation(null);
-              action();
-            }}
-            onCancel={() => setConfirmation(null)}
-          />
-        )}
+        {confirmationDialog}
         <div className="takebar">
           <div className="logo"><b>Q</b>Quiz<span>Sphere</span></div>
         </div>
@@ -121,6 +123,7 @@ export default function TakeQuiz({ quizId, go }) {
 
   return (
     <div className="take">
+      {confirmationDialog}
       <div className="takebar">
         <div className="logo"><b>Q</b>Quiz<span>Sphere</span></div>
         <div className={secondsLeft <= 60 ? 'timer low' : 'timer'}>
