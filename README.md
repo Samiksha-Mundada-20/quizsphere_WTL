@@ -78,10 +78,13 @@ The published front end shows an API configuration message until you deploy the
 back end and database separately. Then add a repository Actions variable named
 `VITE_API_URL` with the API base URL ending in `/api`, and configure the back
 end's `CLIENT_URL` to the Pages URL. Use deployment-specific database
-credentials and a unique random `JWT_SECRET` of at least 32 characters; do not
-use the demo administrator account on a publicly reachable back end.
+credentials and a unique random `JWT_SECRET` of at least 32 characters.
 
-### Deploy the back end and MySQL on Railway
+### Optional: Deploy the back end and MySQL on Railway
+
+The backend and database are currently intended to run locally; Railway is not
+required to run the app locally or publish its frontend on GitHub Pages. Follow
+these steps only if you later decide to host the API and database.
 
 1. Create a Railway project from this GitHub repository and add a **MySQL**
    service.
@@ -108,10 +111,6 @@ use the demo administrator account on a publicly reachable back end.
    Secrets and variables > Actions > Variables**, add `VITE_API_URL` with the
    API's public URL followed by `/api`, and rerun the Pages workflow (or push a
    new commit). The API domain must allow requests from the Pages URL above.
-
-The public demo administrator credentials are intentional but unsafe for any
-real or sensitive data. Anyone who knows them can use the deployed admin
-features; change the seed account's password before using the hosted service.
 
 ## Login details
 
